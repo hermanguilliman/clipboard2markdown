@@ -5,7 +5,7 @@ h2 {
 
 body {
     background-attachment: fixed;
-    background-image: url('static/images/background.svg');
+    background-image: url('../images/background.svg');
     background-position: right 10% bottom 20%;
     background-repeat: no-repeat;
     background-size: 20em;
