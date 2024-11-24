@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="static/css/style.css">
         <script src="static/js/to-markdown.js"></script>
         <script src="static/js/clipboard2markdown.js"></script>
+        
     </head>
     <body>
         <div class="container">
@@ -20,13 +21,16 @@
                     <li>Найдите текст, который нужно преобразовать в Markdown (<i>например</i>, в другой вкладке браузера)</li>
                     <li>Скопируйте его в буфер обмена (<code>Ctrl+C</code>, или <code>&#8984;+C</code> на Mac)</li>
                     <li>Вставьте его в это окно (<code>Ctrl+V</code>, или <code>&#8984;+V</code> на Mac)</li>
-                    <li>Появится преобразованный Markdown!</li>
+                    <li>Появится текст преобразованный в Markdown</li>
+                    <li>Нажмите кнопку "Скачать как Markdown", чтобы сохранить результат</li>
                 </ol>
             </section>
             <div contenteditable="true" id="pastebin"></div>
             <section class="hidden" id="wrapper">
                 <textarea id="output"></textarea>
+                <button id="downloadBtn" class="btn btn-primary mt-3">Скачать как Markdown</button>
             </section>
         </div>
+    <script src="static/js/downloadMD.js"></script>
     </body>
 </html>
