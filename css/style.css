@@ -1,35 +1,40 @@
 /* Variables */
 :root {
-  --background-color: #e8ecf5;
-  --background-color-alt: #d1dce6;
-  --border-color: #5723b2;
-  --text-color: #440231;
-  --link-color: #2a1970;
-  --logo-color: #ff4f64;
+  --background-color: #282a36;
+  --background-color-alt: #44475a;
+  --border-color: #6272a4;
+  --text-color: #f8f8f2;
+  --link-color: #8be9fd;
+  --logo-color: #ff79c6;
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #370127;
-    --background-color-alt: #440231;
-    --border-color: #d2b2b5;
-    --text-color: #f0dddf;
-    --link-color: #f0dddf;
-    --logo-color: #d12c3f;
+    --background-color: #282a36;
+    --background-color-alt: #44475a;
+    --border-color: #6272a4;
+    --text-color: #f8f8f2;
+    --link-color: #8be9fd;
+    --logo-color: #ff79c6;
   }
 }
 
 /* Basics */
 * {
+  margin: 0px;
   box-sizing: border-box;
 }
+
 body,
 html {
   margin: 0;
   padding: 0;
 }
+
 html {
   height: 100%;
 }
+
 body {
   background-color: var(--background-color);
   word-break: break-word;
@@ -40,6 +45,7 @@ body {
   font-weight: 400;
   min-height: 100%;
 }
+
 svg {
   margin: 2rem auto 0;
 }
@@ -53,22 +59,27 @@ h4 {
   line-height: 1.5;
   font-weight: 500;
 }
+
 h1 a {
   color: var(--text-color);
   text-decoration: none;
 }
+
 p {
   font-size: 1rem;
   line-height: 150%;
 }
+
 textarea,
 input {
   border: 1px solid var(--border-color);
   border-radius: 5px;
 }
+
 a {
   color: var(--link-color);
 }
+
 a:hover {
   text-decoration: none;
 }
@@ -113,9 +124,11 @@ main p.drop {
   padding: 40px;
   align-self: center;
 }
+
 main p.drop.active {
   border: 2px dashed var(--logo-color);
 }
+
 main p.help {
   opacity: 0.8;
   margin-bottom: 0;
@@ -140,6 +153,7 @@ article h1 {
   margin-bottom: 2rem;
   align-self: center;
 }
+
 article img {
   width: 700px;
   max-width: 100%;
@@ -147,12 +161,15 @@ article img {
   border: 1px solid var(--text-color);
   border-radius: 5px;
 }
+
 article p {
   margin-top: 0;
 }
+
 article ul {
   margin-top: 1rem;
 }
+
 article li {
   line-height: 2;
 }
@@ -172,6 +189,7 @@ svg {
   color: transparent;
   user-select: none;
 }
+
 #paste * {
   background-color: transparent !important;
   color: transparent !important;

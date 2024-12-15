@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="utf-8" />
     <title>Скопипасти в markdown!</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/style.css" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <script src="./turndown-7.1.1.js"></script>
-    <script src="./turndown-plugin-gfm-1.0.2.js"></script>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="favicon/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicon/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicon/apple-touch-icon.png"
+    />
+    <link rel="icon" sizes="192x192" href="favicon/android-chrome-192x192.png" />
+    <link rel="icon" sizes="512x512" href="favicon/512.png" />
+    <link rel="shortcut icon" href="favicon/favicon.png" type="image/x-icon" />
+    <link rel="manifest" href="/manifest.json" />
+    <script src="js/turndown-7.1.1.js"></script>
+    <script src="js/turndown-plugin-gfm-1.0.2.js"></script>
 
     <meta
       name="description"
@@ -17,14 +39,15 @@
   </head>
   <body>
     <header>
-
       <h1>Скопипасти в markdown!</h1>
     </header>
 
     <main>
       <p class="drop">
-        Нажмите комбинацию <kbd id="cmd-key">CMD</kbd> + <kbd>V</kbd> чтобы вставить форматированный
-        текст<br /><br /><em>или перетяните HTML файл</em>
+        Нажмите комбинацию <kbd id="cmd-key">CMD</kbd> + <kbd>V</kbd> чтобы
+        вставить форматированный текст<br /><br /><em
+          >или перетяните HTML файл</em
+        >
       </p>
       <div id="paste" contenteditable="true" spellcheck="false">Paste</div>
       <p class="help">
@@ -44,8 +67,7 @@
         }
       })();
     </script>
-
   </body>
 
-  <script src="/app.js"></script>
+  <script src="js/app.js"></script>
 </html>
