@@ -1,10 +1,10 @@
 /* Variables */
 :root {
-  --background-color: #f5e8f5;
-  --background-color-alt: #e6d1e6;
-  --border-color: #b2238a;
+  --background-color: #e8ecf5;
+  --background-color-alt: #d1dce6;
+  --border-color: #5723b2;
   --text-color: #440231;
-  --link-color: #701958;
+  --link-color: #2a1970;
   --logo-color: #ff4f64;
 }
 @media (prefers-color-scheme: dark) {
