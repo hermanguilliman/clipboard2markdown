@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <title>Скопипасти в markdown!</title>
@@ -39,6 +39,7 @@
   </head>
   <body>
     <header>
+      <button id="theme-toggle" aria-label="Переключить тему">☾</button>
       <h1>Скопипасти в markdown!</h1>
     </header>
 
@@ -53,7 +54,46 @@
       <p class="help">
         <a href="/?cleanup=no">Отключить очистку</a>
       </p>
+      <details id="settings-panel">
+        <summary>Настройки</summary>
+        <div class="settings-row">
+          <label>Заголовки
+            <select id="setting-headingStyle">
+              <option value="atx">## ATX</option>
+              <option value="setext">=== Setext</option>
+            </select>
+          </label>
+          <label>Маркер
+            <select id="setting-bulletListMarker">
+              <option value="-">-</option>
+              <option value="*">*</option>
+              <option value="+">+</option>
+            </select>
+          </label>
+          <label>Курсив
+            <select id="setting-emDelimiter">
+              <option value="_">_текст_</option>
+              <option value="*">*текст*</option>
+            </select>
+          </label>
+          <label>Жирный
+            <select id="setting-strongDelimiter">
+              <option value="**">**текст**</option>
+              <option value="__">__текст__</option>
+            </select>
+          </label>
+          <label>Код
+            <select id="setting-codeBlockStyle">
+              <option value="fenced">```</option>
+              <option value="indented">    4 пробела</option>
+            </select>
+          </label>
+        </div>
+      </details>
       <textarea id="markdown" spellcheck="false"></textarea>
+      <div id="actions">
+        <button id="copy-btn">Копировать</button>
+      </div>
     </main>
 
     <script>

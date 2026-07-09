@@ -6,7 +6,7 @@ clipboard2markdown
 > Use the clipboard and paste to Markdown with a single keypress.
 >
 > The conversion is carried out by
-> [to-markdown](https://github.com/domchristie/to-markdown),
+> [Turndown](https://github.com/mixmark-io/turndown) (v7.1.1) with the GFM plugin,
 > a Markdown converter running in the browser.
 
 Demo
@@ -48,9 +48,8 @@ The original version used
 [Kates Gasis](https://github.com/kates) and
 [Himanshu Gilani](https://github.com/hgilani).
 [Vegard Øye](https://github.com/epsil) ported it to
-[to-markdown](https://github.com/domchristie/to-markdown) by
-[Dom Christie](https://github.com/domchristie). The HTML template
-is based on [Bootstrap](http://getbootstrap.com/).
+[Turndown](https://github.com/mixmark-io/turndown) by Dom Christie.
+The HTML template is based on [Bootstrap](http://getbootstrap.com/).
 
 ### License
 
