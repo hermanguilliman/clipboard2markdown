@@ -10,10 +10,12 @@ Static single-page app. No test runner, no type checker.
 npm install         # install turndown + gfm plugin + esbuild
 npm run build       # bundle app.js + deps → dist/app.js (minified)
 npm run dev         # same, but with sourcemaps + watch mode + http://localhost:3000
+npm run deploy      # clean + build + copy all static assets to dist/ (gh-pages ready)
 npm run clean       # remove dist/
 ```
 
-Open `dist/` is gitignored — always run `npm run build` before serving.
+`dist/` is gitignored, except `dist/app.js` is committed so GitHub Pages from
+`master` branch root can serve it. Always run `npm run build` after changing JS.
 
 ## Development
 
