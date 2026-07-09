@@ -2,10 +2,16 @@
 <html lang="ru" data-theme="dark">
   <head>
     <meta charset="utf-8" />
-    <title>Скопипасти в markdown!</title>
+    <title>Скопипасти в markdown</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Doto:wght@400..700&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
     <link
@@ -29,85 +35,100 @@
     <link rel="icon" sizes="512x512" href="favicon/512.png" />
     <link rel="shortcut icon" href="favicon/favicon.png" type="image/x-icon" />
     <link rel="manifest" href="/manifest.json" />
-    <script src="js/turndown-7.1.1.js"></script>
-    <script src="js/turndown-plugin-gfm-1.0.2.js"></script>
-
     <meta
       name="description"
-      content="Преобразуйте форматированный текст в язык markdown. Просто вставьте текст и наш конвертер быстро преобразует его в markdown. Наш конвертер быстрый, простой в использовании и абсолютно бесплатный. Попробуйте и посмотрите как он может помочь вам с легкостью отформатировать текст."
+      content="Преобразуйте форматированный текст в язык markdown. Просто вставьте текст и наш конвертер быстро преобразует его в markdown."
     />
   </head>
   <body>
-    <header>
-      <button id="theme-toggle" aria-label="Переключить тему">☾</button>
-      <h1>Скопипасти в markdown!</h1>
+    <header class="nd-header">
+      <h1 class="nd-display">СКОПИПАСТИ В&nbsp;MARKDOWN</h1>
+      <button id="theme-toggle" aria-label="Сменить тему">☾</button>
     </header>
 
     <main>
-      <p class="drop">
-        Нажмите комбинацию <kbd id="cmd-key">CMD</kbd> + <kbd>V</kbd> чтобы
-        вставить форматированный текст<br /><br /><em
-          >или перетяните HTML файл</em
+      <div class="drop nd-dropzone">
+        <span class="nd-dropzone-label"
+          ><kbd id="cmd-key">CMD</kbd>+<kbd>V</kbd> ИЛИ ПЕРЕТАЩИТЕ
+          HTML-ФАЙЛ</span
         >
-      </p>
-      <div id="paste" contenteditable="true" spellcheck="false">Paste</div>
-      <p class="help">
-        <a href="/?cleanup=no">Отключить очистку</a>
-      </p>
-      <details id="settings-panel">
-        <summary>Настройки</summary>
-        <div class="settings-row">
-          <label>Заголовки
+      </div>
+
+      <div class="nd-guide">
+        <span class="nd-guide-step">СКОПИРУЙТЕ ТЕКСТ</span>
+        <span class="nd-guide-step">ВСТАВЬТЕ СЮДА</span>
+        <span class="nd-guide-step">ИСПОЛЬЗУЙТЕ MARKDOWN</span>
+      </div>
+
+      <div id="paste" contenteditable="true" spellcheck="false"></div>
+
+      <div class="nd-toolbar help">
+        <a class="nd-tag" href="/?cleanup=no" id="cleanup-toggle"
+          >ОЧИСТКА: ВКЛ</a
+        >
+        <span class="nd-tag" id="settings-btn">НАСТРОЙКИ</span>
+      </div>
+
+      <details id="settings-panel" class="nd-settings">
+        <summary>ПАРАМЕТРЫ КОНВЕРТАЦИИ</summary>
+        <div class="nd-settings-row">
+          <label
+            >ЗАГОЛОВКИ
             <select id="setting-headingStyle">
               <option value="atx">## ATX</option>
               <option value="setext">=== Setext</option>
             </select>
           </label>
-          <label>Маркер
+          <label
+            >МАРКЕР
             <select id="setting-bulletListMarker">
               <option value="-">-</option>
               <option value="*">*</option>
               <option value="+">+</option>
             </select>
           </label>
-          <label>Курсив
+          <label
+            >КУРСИВ
             <select id="setting-emDelimiter">
               <option value="_">_текст_</option>
               <option value="*">*текст*</option>
             </select>
           </label>
-          <label>Жирный
+          <label
+            >ЖИРНЫЙ
             <select id="setting-strongDelimiter">
               <option value="**">**текст**</option>
               <option value="__">__текст__</option>
             </select>
           </label>
-          <label>Код
+          <label
+            >КОД
             <select id="setting-codeBlockStyle">
               <option value="fenced">```</option>
-              <option value="indented">    4 пробела</option>
+              <option value="indented">4 ПРОБЕЛА</option>
             </select>
           </label>
         </div>
       </details>
-      <textarea id="markdown" spellcheck="false"></textarea>
-      <div id="actions">
-        <button id="copy-btn">Копировать</button>
+
+      <div class="nd-output-area">
+        <textarea id="markdown" class="nd-output" spellcheck="false"></textarea>
+        <button id="copy-btn" class="nd-btn-primary">КОПИРОВАТЬ</button>
       </div>
     </main>
 
     <script>
       (() => {
-        // If query param cleanup=no, replace the link in p.help
         const search = new URLSearchParams(location.search);
-        if (search.get("cleanup") === "no") {
+        const toggle = document.getElementById("cleanup-toggle");
+        if (search.get("cleanup") === "no" && toggle) {
           search.set("cleanup", "yes");
-          document.querySelector(".help a").href = `/?${search.toString()}`;
-          document.querySelector(".help a").textContent = "Включить очистку";
+          toggle.href = "/?" + search.toString();
+          toggle.textContent = "ОЧИСТКА: ВЫКЛ";
         }
       })();
     </script>
   </body>
 
-  <script src="js/app.js"></script>
+  <script src="dist/app.js"></script>
 </html>

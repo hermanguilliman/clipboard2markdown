@@ -1,10 +1,19 @@
 # clipboard2markdown
 
-Static single-page app. No build, no test runner, no package manager.
+Static single-page app. No test runner, no type checker.
+
+**Design system:** Nothing-Inspired (Doto + Space Grotesk + Space Mono, monochrome tokens, dot-grid background).
 
 ## Commands
 
-There are none — this is pure HTML/JS/CSS with zero tooling.
+```sh
+npm install         # install turndown + gfm plugin + esbuild
+npm run build       # bundle app.js + deps → dist/app.js (minified)
+npm run dev         # same, but with sourcemaps + watch mode + http://localhost:3000
+npm run clean       # remove dist/
+```
+
+Open `dist/` is gitignored — always run `npm run build` before serving.
 
 ## Development
 
@@ -13,30 +22,29 @@ Open `index.html` in any browser. Hit `Ctrl/Cmd+V` to paste rich text. The
 
 ## Architecture
 
-- **entrypoint**: `index.html` (Russian locale). Loads `<head>` scripts
-  `js/turndown-7.1.1.js` and `js/turndown-plugin-gfm-1.0.2.js`, then
-  `js/app.js` at end of `<body>`.
-- **core logic**: `js/app.js` — wraps everything in an IIFE, uses TurndownService
-  with GFM plugin. Important query param: `?cleanup=no` toggles Google Docs
+- **entrypoint**: `index.html` (Russian locale). Loads Google Fonts (Doto, Space
+  Grotesk, Space Mono) in `<head>`, then `dist/app.js` at end of `<body>`.
+- **core logic**: `js/app.js` — ES module bundled via esbuild with TurndownService
+  + GFM plugin. Important query param: `?cleanup=no` toggles Google Docs
   list/nesting fixes and redirect-link unwrapping.
 - **Turndown config** (app.js:49-62): `headingStyle`, `bulletListMarker`,
   `codeBlockStyle`, `emDelimiter`, `strongDelimiter` — all configurable via
   settings panel and persisted to `localStorage`.
 - **Input**: hidden `contenteditable` div for paste interception + drag-and-drop
   an `.html` file onto the drop zone.
-- **Output**: auto-selected `<textarea>` with a **Copy button** (`navigator.clipboard.writeText`).
+- **Output**: `<textarea class="nd-output">` with a primary pill **Copy button** (`navigator.clipboard.writeText`).
 
 ## Settings
 
-Turndown options exposed via `<details>` panel: heading style (ATX/Setext),
-bullet marker (`-`/`*`/`+`), italic and bold delimiters, code block style.
-Changes recreate the TurndownService on the fly. Persisted under
+Turndown options exposed via `<details class="nd-settings">` panel: heading style
+(ATX/Setext), bullet marker (`-`/`*`/`+`), italic and bold delimiters, code block
+style. Changes recreate the TurndownService on the fly. Persisted under
 `localStorage` key `clipboard2markdown-settings`.
 
 ## Theme
 
-Dracula-inspired dark theme + light theme variant. Toggle via fixed button
-(top-right). Persisted under `localStorage` key `clipboard2markdown-theme`.
+Nothing monochrome dark/light. Toggle via ghost button (header right). Persisted
+under `localStorage` key `clipboard2markdown-theme`.
 
 ## Notable quirks
 
@@ -47,3 +55,5 @@ Dracula-inspired dark theme + light theme variant. Toggle via fixed button
 - Error handling wraps `convert()` in try/catch — shows error message in textarea.
 - Paste uses `requestAnimationFrame` instead of old `setTimeout(250)`.
 - Console.log removed from production code.
+- Google Fonts loaded: Doto (display), Space Grotesk (body), Space Mono (labels/data).
+  Labels are ALL CAPS, 0.08em tracking, 11px — per Nothing design system.

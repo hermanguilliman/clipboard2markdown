@@ -1,3 +1,6 @@
+import TurndownService from "turndown";
+import { gfm } from "turndown-plugin-gfm";
+
 (() => {
   const pasteElement = document.getElementById("paste");
   const markdownElement = document.getElementById("markdown");
@@ -43,8 +46,6 @@
   let currentTheme = loadTheme();
 
   document.documentElement.setAttribute("data-theme", currentTheme);
-
-  const gfm = turndownPluginGfm.gfm;
 
   const createService = () => {
     const s = new TurndownService({
@@ -228,11 +229,7 @@
       markdown = markdown.trim();
 
       markdownElement.value = markdown + "\n";
-      markdownElement.style.display = "block";
       markdownElement.classList.remove("error");
-
-      const actions = document.getElementById("actions");
-      if (actions) actions.style.display = "flex";
 
       markdownElement.focus();
       markdownElement.select();
@@ -240,7 +237,6 @@
       document.body.classList.add("has-markdown");
     } catch (error) {
       markdownElement.value = `\u041E\u0448\u0438\u0431\u043A\u0430: ${error.message}`;
-      markdownElement.style.display = "block";
       markdownElement.classList.add("error");
       document.body.classList.add("has-markdown");
     }
@@ -259,6 +255,12 @@
 
   const settingsPanel = document.getElementById("settings-panel");
   if (settingsPanel) {
+    const settingsBtn = document.getElementById("settings-btn");
+    if (settingsBtn) {
+      settingsBtn.addEventListener("click", () => {
+        settingsPanel.open = !settingsPanel.open;
+      });
+    }
     const selects = settingsPanel.querySelectorAll("select");
     selects.forEach((select) => {
       const key = select.id.replace("setting-", "");
