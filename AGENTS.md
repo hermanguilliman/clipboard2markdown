@@ -53,7 +53,10 @@ under `localStorage` key `clipboard2markdown-theme`.
 - README says it uses `to-markdown`; **the bundled library is Turndown** (v7.1.1).
 - Cleanup mode enables special handling for: Google Docs misnested lists, Google
   redirect URLs, footnote formatting, and excess blank lines between list items.
-- Deployment: GitHub Pages with custom domain (`CNAME` → `md.guilliman.ru`).
+- Deployment: GitHub Pages with custom domain (`CNAME` → `md.guilliman.ru`). CI
+  via `.github/workflows/deploy.yml` — builds JS on push to `master`, deploys
+  via `actions/deploy-pages`. Alternatively, `npm run deploy` prepares `dist/`
+  for `npx gh-pages -d dist`.
 - Error handling wraps `convert()` in try/catch — shows error message in textarea.
 - Paste uses `requestAnimationFrame` instead of old `setTimeout(250)`.
 - Console.log removed from production code.
