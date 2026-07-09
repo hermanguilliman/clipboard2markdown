@@ -4,6 +4,7 @@
   "scripts": {
     "build": "esbuild js/app.js --bundle --outfile=dist/app.js --minify",
     "dev": "node scripts/dev.js",
+    "deploy": "node scripts/deploy.js",
     "clean": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\""
   },
   "dependencies": {
