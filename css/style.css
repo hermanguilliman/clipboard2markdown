@@ -326,6 +326,11 @@ textarea.nd-output.error {
   border-color: var(--text-primary);
 }
 
+.nd-settings-row select option {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
 .nd-history {
   border-top: 1px solid var(--border);
   padding-top: 4px;
