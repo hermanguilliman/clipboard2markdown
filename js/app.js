@@ -85,31 +85,38 @@ import { gfm } from "turndown-plugin-gfm";
     }
   });
 
-  const dropbox = document.querySelector(".drop");
+  const pasteHint = document.getElementById("paste-hint");
+  let dragCounter = 0;
 
-  dropbox.addEventListener("drop", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+  document.addEventListener("dragenter", (e) => {
+    e.preventDefault();
+    dragCounter++;
+    if (pasteHint) pasteHint.classList.add("is-dragging");
+  });
 
-    dropbox.classList.remove("active");
+  document.addEventListener("dragover", (e) => {
+    e.preventDefault();
+  });
 
-    const file = event.dataTransfer.files[0];
+  document.addEventListener("dragleave", (e) => {
+    e.preventDefault();
+    dragCounter--;
+    if (dragCounter <= 0) {
+      dragCounter = 0;
+      if (pasteHint) pasteHint.classList.remove("is-dragging");
+    }
+  });
+
+  document.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dragCounter = 0;
+    if (pasteHint) pasteHint.classList.remove("is-dragging");
+
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
     const reader = new FileReader();
     reader.onload = (event) => convert(event.target.result);
     reader.readAsText(file);
-  });
-
-  dropbox.addEventListener("dragenter", () => {
-    dropbox.classList.add("active");
-  });
-
-  dropbox.addEventListener("dragover", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-  });
-
-  dropbox.addEventListener("dragleave", () => {
-    dropbox.classList.remove("active");
   });
 
   pasteElement.addEventListener("paste", () => {
@@ -230,15 +237,15 @@ import { gfm } from "turndown-plugin-gfm";
 
       markdownElement.value = markdown + "\n";
       markdownElement.classList.remove("error");
+      if (copyBtn) copyBtn.disabled = false;
 
       markdownElement.focus();
       markdownElement.select();
 
-      document.body.classList.add("has-markdown");
+      addToHistory(markdownElement.value);
     } catch (error) {
       markdownElement.value = `\u041E\u0448\u0438\u0431\u043A\u0430: ${error.message}`;
       markdownElement.classList.add("error");
-      document.body.classList.add("has-markdown");
     }
   };
 
@@ -272,6 +279,121 @@ import { gfm } from "turndown-plugin-gfm";
       });
     });
   }
+
+  const HISTORY_KEY = "clipboard2markdown-history";
+  const MAX_HISTORY = 10;
+
+  const loadHistory = () => {
+    try {
+      const saved = localStorage.getItem(HISTORY_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return [];
+  };
+
+  const saveHistory = (entries) => {
+    while (entries.length > MAX_HISTORY) entries.shift();
+    try {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(entries));
+      return { ok: true, warning: false };
+    } catch (e) {
+      if (e.name === "QuotaExceededError" || e.code === 22) {
+        if (entries.length > 1) {
+          entries.shift();
+          try {
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(entries));
+            return { ok: true, warning: true };
+          } catch {}
+        }
+        return { ok: false, warning: true };
+      }
+      return { ok: true, warning: false };
+    }
+  };
+
+  const formatTime = (ts) => {
+    const d = new Date(ts);
+    const now = Date.now();
+    const diff = now - d;
+    if (diff < 60000) return "\u0422\u041E\u041B\u042C\u041A\u041E \u0427\u0422\u041E";
+    if (diff < 3600000) return `${Math.floor(diff / 60000)}\u041C \u041D\u0410\u0417\u0410\u0414`;
+    if (diff < 86400000) return `${Math.floor(diff / 3600000)}\u0427 \u041D\u0410\u0417\u0410\u0414`;
+    return d.toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
+  };
+
+  const historyPanel = document.getElementById("history-panel");
+  const historyList = document.getElementById("history-list");
+  const historyCount = document.getElementById("history-count");
+  const historyWarning = document.getElementById("history-warning");
+
+  const renderHistory = () => {
+    const entries = loadHistory();
+    if (!historyList) return;
+    historyList.innerHTML = "";
+    if (entries.length === 0) {
+      if (historyPanel) historyPanel.style.display = "none";
+      return;
+    }
+    if (historyPanel) historyPanel.style.display = "";
+    if (historyCount) historyCount.textContent = `(${entries.length})`;
+    const reversed = [...entries].reverse();
+    reversed.forEach((entry) => {
+      const div = document.createElement("div");
+      div.className = "nd-history-entry";
+      const time = document.createElement("span");
+      time.className = "nd-history-time";
+      time.textContent = formatTime(entry.timestamp);
+      const preview = document.createElement("span");
+      preview.className = "nd-history-preview";
+      preview.textContent = entry.preview || "";
+      const btn = document.createElement("button");
+      btn.className = "nd-history-copy";
+      btn.textContent = "\u041A\u041E\u041F\u0418\u0420\u041E\u0412\u0410\u0422\u042C";
+      btn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        try { await navigator.clipboard.writeText(entry.text); }
+        catch {
+          const ta = document.createElement("textarea");
+          ta.value = entry.text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+        btn.textContent = "\u2713";
+        setTimeout(() => { btn.textContent = "\u041A\u041E\u041F\u0418\u0420\u041E\u0412\u0410\u0422\u042C"; }, 1500);
+      });
+      div.appendChild(time);
+      div.appendChild(preview);
+      div.appendChild(btn);
+      div.addEventListener("click", () => {
+        markdownElement.value = entry.text;
+        if (copyBtn) copyBtn.disabled = false;
+        markdownElement.focus();
+        markdownElement.scrollIntoView({ behavior: "smooth" });
+      });
+      historyList.appendChild(div);
+    });
+  };
+
+  const addToHistory = (text) => {
+    if (!text) return;
+    const entries = loadHistory();
+    entries.push({
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      text: text,
+      timestamp: Date.now(),
+      preview: text.replace(/\s+/g, " ").slice(0, 100).trim(),
+    });
+    const result = saveHistory(entries);
+    if (result.warning && historyWarning) {
+      historyWarning.textContent = "\u26A0 \u0414\u041E\u0421\u0422\u0418\u0413\u041D\u0423\u0422 \u041B\u0418\u041C\u0418\u0422 \u0425\u0420\u0410\u041D\u0418\u041B\u0418\u0429\u0410, \u0421\u0422\u0410\u0420\u042B\u0415 \u0417\u0410\u041F\u0418\u0421\u0418 \u0423\u0414\u0410\u041B\u0415\u041D\u042B";
+      historyWarning.style.display = "block";
+    }
+    renderHistory();
+  };
+
+  renderHistory();
 
   const copyBtn = document.getElementById("copy-btn");
   if (copyBtn) {

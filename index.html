@@ -41,81 +41,90 @@
     />
   </head>
   <body>
-    <header class="nd-header">
-      <h1 class="nd-display">СКОПИПАСТИ В&nbsp;MARKDOWN</h1>
-      <button id="theme-toggle" aria-label="Сменить тему">☾</button>
-    </header>
+    <div class="nd-app">
+      <header class="nd-header">
+        <h1 class="nd-display">СКОПИПАСТИ В&nbsp;MARKDOWN</h1>
+        <button id="theme-toggle" aria-label="Сменить тему">☾</button>
+      </header>
 
-    <main>
-      <div class="drop nd-dropzone">
-        <span class="nd-dropzone-label"
-          ><kbd id="cmd-key">CMD</kbd>+<kbd>V</kbd> ИЛИ ПЕРЕТАЩИТЕ
-          HTML-ФАЙЛ</span
-        >
-      </div>
-
-      <div class="nd-guide">
-        <span class="nd-guide-step">СКОПИРУЙТЕ ТЕКСТ</span>
-        <span class="nd-guide-step">ВСТАВЬТЕ СЮДА</span>
-        <span class="nd-guide-step">ИСПОЛЬЗУЙТЕ MARKDOWN</span>
-      </div>
-
-      <div id="paste" contenteditable="true" spellcheck="false"></div>
-
-      <div class="nd-toolbar help">
-        <a class="nd-tag" href="/?cleanup=no" id="cleanup-toggle"
-          >ОЧИСТКА: ВКЛ</a
-        >
-        <span class="nd-tag" id="settings-btn">НАСТРОЙКИ</span>
-      </div>
-
-      <details id="settings-panel" class="nd-settings">
-        <summary>ПАРАМЕТРЫ КОНВЕРТАЦИИ</summary>
-        <div class="nd-settings-row">
-          <label
-            >ЗАГОЛОВКИ
-            <select id="setting-headingStyle">
-              <option value="atx">## ATX</option>
-              <option value="setext">=== Setext</option>
-            </select>
-          </label>
-          <label
-            >МАРКЕР
-            <select id="setting-bulletListMarker">
-              <option value="-">-</option>
-              <option value="*">*</option>
-              <option value="+">+</option>
-            </select>
-          </label>
-          <label
-            >КУРСИВ
-            <select id="setting-emDelimiter">
-              <option value="_">_текст_</option>
-              <option value="*">*текст*</option>
-            </select>
-          </label>
-          <label
-            >ЖИРНЫЙ
-            <select id="setting-strongDelimiter">
-              <option value="**">**текст**</option>
-              <option value="__">__текст__</option>
-            </select>
-          </label>
-          <label
-            >КОД
-            <select id="setting-codeBlockStyle">
-              <option value="fenced">```</option>
-              <option value="indented">4 ПРОБЕЛА</option>
-            </select>
-          </label>
+      <div class="nd-card" id="card">
+        <div class="nd-paste-hint" id="paste-hint">
+          <span class="nd-paste-hint-text"
+            ><kbd id="cmd-key">CMD</kbd>+<kbd>V</kbd> или перетащите
+            HTML-файл</span
+          >
         </div>
-      </details>
 
-      <div class="nd-output-area">
-        <textarea id="markdown" class="nd-output" spellcheck="false"></textarea>
-        <button id="copy-btn" class="nd-btn-primary">КОПИРОВАТЬ</button>
+        <textarea
+          id="markdown"
+          class="nd-output"
+          spellcheck="false"
+          placeholder="Нажмите Ctrl+V, чтобы вставить форматированный текст…"
+        ></textarea>
+
+        <div class="nd-toolbar">
+          <div class="nd-toolbar-left">
+            <a class="nd-tag" href="/?cleanup=no" id="cleanup-toggle"
+              >ОЧИСТКА: ВКЛ</a
+            >
+            <span class="nd-tag" id="settings-btn">НАСТРОЙКИ</span>
+          </div>
+          <button id="copy-btn" class="nd-btn-primary" disabled>
+            КОПИРОВАТЬ
+          </button>
+        </div>
+
+        <details id="settings-panel" class="nd-settings">
+          <summary>ПАРАМЕТРЫ КОНВЕРТАЦИИ</summary>
+          <div class="nd-settings-row">
+            <label
+              >ЗАГОЛОВКИ
+              <select id="setting-headingStyle">
+                <option value="atx">## ATX</option>
+                <option value="setext">=== Setext</option>
+              </select>
+            </label>
+            <label
+              >МАРКЕР
+              <select id="setting-bulletListMarker">
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="+">+</option>
+              </select>
+            </label>
+            <label
+              >КУРСИВ
+              <select id="setting-emDelimiter">
+                <option value="_">_текст_</option>
+                <option value="*">*текст*</option>
+              </select>
+            </label>
+            <label
+              >ЖИРНЫЙ
+              <select id="setting-strongDelimiter">
+                <option value="**">**текст**</option>
+                <option value="__">__текст__</option>
+              </select>
+            </label>
+            <label
+              >КОД
+              <select id="setting-codeBlockStyle">
+                <option value="fenced">```</option>
+                <option value="indented">4 ПРОБЕЛА</option>
+              </select>
+            </label>
+          </div>
+        </details>
+
+        <details id="history-panel" class="nd-history">
+          <summary>ИСТОРИЯ <span id="history-count"></span></summary>
+          <div id="history-list" class="nd-history-list"></div>
+          <div id="history-warning" class="nd-history-warning"></div>
+        </details>
       </div>
-    </main>
+    </div>
+
+    <div id="paste" contenteditable="true" spellcheck="false"></div>
 
     <script>
       (() => {
