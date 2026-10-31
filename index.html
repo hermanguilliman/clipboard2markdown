@@ -1,140 +1,463 @@
 <!DOCTYPE html>
 <html lang="ru" data-theme="dark">
-  <head>
-    <meta charset="utf-8" />
-    <title>Скопипасти в Markdown — конвертер буфера обмена в Markdown</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Doto:wght@400..700&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
-    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta
-      name="description"
-      content="Преобразуйте форматированный текст в язык markdown. Просто вставьте текст и наш конвертер быстро преобразует его в markdown."
-    />
-    <meta property="og:title" content="Скопипасти в markdown" />
-    <meta property="og:description" content="Преобразуйте форматированный текст в язык markdown. Просто вставьте текст и наш конвертер быстро преобразует его в markdown." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://md.guilliman.ru" />
-    <meta property="og:image" content="https://md.guilliman.ru/og-image.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="ru_RU" />
-    <meta property="og:site_name" content="Скопипасти в markdown" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Скопипасти в markdown" />
-    <meta name="twitter:description" content="Преобразуйте форматированный текст в язык markdown. Просто вставьте текст и наш конвертер быстро преобразует его в markdown." />
-    <meta name="yandex-verification" content="51133ed144e8f7d1" />
-    <link rel="canonical" href="https://md.guilliman.ru" />
-  </head>
-  <body>
-    <div class="nd-app">
-      <header class="nd-header">
-        <h1 class="nd-display">СКОПИПАСТИ В&nbsp;MARKDOWN</h1>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Скопипасти в Markdown — онлайн-конвертер HTML, Word и текста из буфера обмена в Markdown</title>
+  <meta name="description"
+    content="Бесплатный онлайн-конвертер HTML и форматированного текста (из Word, Google Docs, веб-страниц) в чистый Markdown. Просто нажмите Ctrl+V / Cmd+V или перетащите HTML-файл." />
+  <meta name="keywords"
+    content="html в markdown онлайн, конвертер html to markdown, word в markdown, google docs в markdown, скопипасти в markdown, текст в маркдаун, md.guilliman.ru" />
+  <meta name="author" content="Herman Guilliman" />
+  <meta name="yandex-verification" content="51133ed144e8f7d1" />
+  <link rel="canonical" href="https://md.guilliman.ru/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Doto:wght@400..700&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
+  <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Скопипасти в Markdown — конвертер HTML и текста в Markdown" />
+  <meta property="og:description"
+    content="Мгновенное преобразование форматированного текста из буфера обмена (Word, Google Docs, сайты) и HTML-файлов в чистую разметку Markdown." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://md.guilliman.ru/" />
+  <meta property="og:image" content="https://md.guilliman.ru/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:site_name" content="Скопипасти в Markdown" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Скопипасти в Markdown — конвертер HTML в Markdown" />
+  <meta name="twitter:description"
+    content="Преобразуйте форматированный текст из буфера обмена или HTML-файл в чистый язык Markdown за секунду." />
+  <meta name="twitter:image" content="https://md.guilliman.ru/og-image.png" />
+
+  <!-- Стили для кнопки и модального окна всех проектов Guilliman's Lab -->
+  <style>
+    .nd-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nd-hub-btn {
+      height: 32px;
+      padding: 0 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(128, 128, 128, 0.35);
+      background: transparent;
+      color: inherit;
+      font-family: "Space Mono", monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.82;
+      transition: opacity 0.2s, border-color 0.2s;
+    }
+
+    .nd-hub-btn:hover {
+      opacity: 1;
+      border-color: currentColor;
+    }
+
+    @media (max-width: 520px) {
+      .nd-hub-btn span {
+        display: none;
+      }
+
+      .nd-hub-btn {
+        padding: 0 8px;
+      }
+    }
+
+    .hub-dialog {
+      margin: auto;
+      width: min(680px, calc(100vw - 32px));
+      max-height: calc(100vh - 48px);
+      background: #101012;
+      color: #ededed;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      padding: 0;
+      overflow: hidden;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.75);
+    }
+
+    html[data-theme="light"] .hub-dialog {
+      background: #ffffff;
+      color: #141414;
+      border-color: rgba(0, 0, 0, 0.16);
+    }
+
+    .hub-dialog[open] {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hub-dialog::backdrop {
+      background: rgba(0, 0, 0, 0.68);
+      backdrop-filter: blur(4px);
+    }
+
+    .hub-dialog__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.22);
+      flex-shrink: 0;
+    }
+
+    .hub-dialog__title {
+      font-family: "Space Mono", monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hub-dialog__close {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      border: 1px solid rgba(128, 128, 128, 0.35);
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .hub-dialog__body {
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      user-select: text;
+    }
+
+    .hub-grid-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 8px;
+    }
+
+    .hub-link-card {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 10px 12px;
+      background: rgba(128, 128, 128, 0.08);
+      border: 1px solid rgba(128, 128, 128, 0.22);
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .hub-link-card:hover {
+      border-color: currentColor;
+      transform: translateY(-1px);
+    }
+
+    .hub-link-card b {
+      font-family: "Space Mono", monospace;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hub-link-card span {
+      font-size: 11px;
+      opacity: 0.72;
+      line-height: 1.35;
+    }
+
+    .hub-seo-text {
+      font-size: 12.5px;
+      line-height: 1.6;
+      opacity: 0.85;
+      border-top: 1px solid rgba(128, 128, 128, 0.22);
+      padding-top: 16px;
+    }
+
+    .hub-seo-text h2 {
+      font-family: "Space Mono", monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+
+    .hub-seo-text p {
+      margin: 0 0 8px;
+    }
+  </style>
+
+  <!-- Микроразметка Schema.org для поисковиков -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Скопипасти в Markdown",
+    "alternateName": "Онлайн-конвертер HTML и буфера обмена в Markdown",
+    "url": "https://md.guilliman.ru/",
+    "description": "Бесплатный онлайн-конвертер форматированного текста из буфера обмена (Word, Google Docs, веб-страниц) и HTML-файлов в чистую разметку Markdown.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "inLanguage": "ru",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Guilliman's Lab",
+      "url": "https://guilliman.ru/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "RUB"
+    }
+  }
+  </script>
+
+  <!-- Yandex.RTB -->
+  <script>window.yaContextCb = window.yaContextCb || []</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+</head>
+
+<body>
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function (m, e, t, r, i, k, a) {
+        m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+        k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+      })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=113961879', 'ym');
+
+    ym(113961879, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true });
+  </script>
+  <noscript>
+    <div><img src="https://mc.yandex.ru/watch/113961879" style="position:absolute; left:-9999px;" alt="" /></div>
+  </noscript>
+  <!-- /Yandex.Metrika counter -->
+
+  <div class="nd-app">
+    <header class="nd-header">
+      <h1 class="nd-display">СКОПИПАСТИ В&nbsp;MARKDOWN</h1>
+      <div class="nd-header-actions">
+        <button type="button" class="nd-hub-btn" id="hubBtn" aria-label="Все проекты Guilliman's Lab"
+          title="Все проекты Guilliman's Lab">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+          </svg>
+          <span>ПРОЕКТЫ</span>
+        </button>
         <button id="theme-toggle" aria-label="Сменить тему">☾</button>
-      </header>
-
-      <div class="nd-card" id="card">
-        <div class="nd-paste-hint" id="paste-hint">
-          <span class="nd-paste-hint-text"
-            ><kbd id="cmd-key">CMD</kbd>+<kbd>V</kbd> или перетащите
-            HTML-файл</span
-          >
-        </div>
-
-        <textarea
-          id="markdown"
-          class="nd-output"
-          spellcheck="false"
-        ></textarea>
-
-        <div class="nd-toolbar">
-          <div class="nd-toolbar-left">
-            <a class="nd-tag" href="/?cleanup=no" id="cleanup-toggle"
-              >ОЧИСТКА: ВКЛ</a
-            >
-            <span class="nd-tag" id="settings-btn">НАСТРОЙКИ</span>
-          </div>
-          <button id="copy-btn" class="nd-btn-primary" disabled>
-            КОПИРОВАТЬ
-          </button>
-        </div>
-
-        <details id="settings-panel" class="nd-settings">
-          <summary>ПАРАМЕТРЫ КОНВЕРТАЦИИ</summary>
-          <div class="nd-settings-row">
-            <label
-              >ЗАГОЛОВКИ
-              <select id="setting-headingStyle">
-                <option value="atx">## ATX</option>
-                <option value="setext">=== Setext</option>
-              </select>
-            </label>
-            <label
-              >МАРКЕР
-              <select id="setting-bulletListMarker">
-                <option value="-">-</option>
-                <option value="*">*</option>
-                <option value="+">+</option>
-              </select>
-            </label>
-            <label
-              >КУРСИВ
-              <select id="setting-emDelimiter">
-                <option value="_">_текст_</option>
-                <option value="*">*текст*</option>
-              </select>
-            </label>
-            <label
-              >ЖИРНЫЙ
-              <select id="setting-strongDelimiter">
-                <option value="**">**текст**</option>
-                <option value="__">__текст__</option>
-              </select>
-            </label>
-            <label
-              >КОД
-              <select id="setting-codeBlockStyle">
-                <option value="fenced">```</option>
-                <option value="indented">4 ПРОБЕЛА</option>
-              </select>
-            </label>
-          </div>
-        </details>
-
-        <details id="history-panel" class="nd-history">
-          <summary>ИСТОРИЯ <span id="history-count"></span></summary>
-          <div id="history-list" class="nd-history-list"></div>
-          <div id="history-warning" class="nd-history-warning"></div>
-        </details>
       </div>
+    </header>
+
+    <div class="nd-card" id="card">
+      <div class="nd-paste-hint" id="paste-hint">
+        <span class="nd-paste-hint-text"><kbd id="cmd-key">CMD</kbd>+<kbd>V</kbd> или перетащите
+          HTML-файл</span>
+      </div>
+
+      <textarea id="markdown" class="nd-output" spellcheck="false"></textarea>
+
+      <div class="nd-toolbar">
+        <div class="nd-toolbar-left">
+          <a class="nd-tag" href="/?cleanup=no" id="cleanup-toggle">ОЧИСТКА: ВКЛ</a>
+          <span class="nd-tag" id="settings-btn">НАСТРОЙКИ</span>
+        </div>
+        <button id="copy-btn" class="nd-btn-primary" disabled>
+          КОПИРОВАТЬ
+        </button>
+      </div>
+
+      <details id="settings-panel" class="nd-settings">
+        <summary>ПАРАМЕТРЫ КОНВЕРТАЦИИ</summary>
+        <div class="nd-settings-row">
+          <label>ЗАГОЛОВКИ
+            <select id="setting-headingStyle">
+              <option value="atx">## ATX</option>
+              <option value="setext">=== Setext</option>
+            </select>
+          </label>
+          <label>МАРКЕР
+            <select id="setting-bulletListMarker">
+              <option value="-">-</option>
+              <option value="*">*</option>
+              <option value="+">+</option>
+            </select>
+          </label>
+          <label>КУРСИВ
+            <select id="setting-emDelimiter">
+              <option value="_">_текст_</option>
+              <option value="*">*текст*</option>
+            </select>
+          </label>
+          <label>ЖИРНЫЙ
+            <select id="setting-strongDelimiter">
+              <option value="**">**текст**</option>
+              <option value="__">__текст__</option>
+            </select>
+          </label>
+          <label>КОД
+            <select id="setting-codeBlockStyle">
+              <option value="fenced">```</option>
+              <option value="indented">4 ПРОБЕЛА</option>
+            </select>
+          </label>
+        </div>
+      </details>
+
+      <details id="history-panel" class="nd-history">
+        <summary>ИСТОРИЯ <span id="history-count"></span></summary>
+        <div id="history-list" class="nd-history-list"></div>
+        <div id="history-warning" class="nd-history-warning"></div>
+      </details>
     </div>
+  </div>
 
-    <div id="paste" contenteditable="true" spellcheck="false"></div>
+  <!-- Модальное окно: Все проекты Guilliman's Lab + РСЯ + SEO-описание -->
+  <dialog class="hub-dialog" id="hubDialog" aria-labelledby="hubDialogTitle">
+    <div class="hub-dialog__head">
+      <span class="hub-dialog__title" id="hubDialogTitle">Guilliman's Lab — Все проекты и о сервисе</span>
+      <button type="button" class="hub-dialog__close" id="hubCloseBtn" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="hub-dialog__body">
+      <nav aria-label="Проекты Guilliman's Lab">
+        <div class="hub-grid-links">
+          <a class="hub-link-card" href="https://guilliman.ru/" target="_blank" rel="noopener">
+            <b>guilliman.ru <span>↗</span></b>
+            <span>Центральный хаб всех проектов и утилит</span>
+          </a>
+          <a class="hub-link-card" href="https://blog.guilliman.ru/" target="_blank" rel="noopener">
+            <b>blog.guilliman.ru <span>↗</span></b>
+            <span>Блог — статьи, заметки и публикации</span>
+          </a>
+          <a class="hub-link-card" href="https://radio.guilliman.ru/" target="_blank" rel="noopener">
+            <b>radio.guilliman.ru <span>↗</span></b>
+            <span>Онлайн-радио и генератор плейлистов M3U8</span>
+          </a>
+          <a class="hub-link-card" href="https://input.guilliman.ru/" target="_blank" rel="noopener">
+            <b>input.guilliman.ru <span>↗</span></b>
+            <span>Диагностика мыши, клавиатуры и периферии</span>
+          </a>
+          <a class="hub-link-card" href="https://stl.guilliman.ru/" target="_blank" rel="noopener">
+            <b>stl.guilliman.ru <span>↗</span></b>
+            <span>Онлайн 3D-просмотрщик STL-моделей</span>
+          </a>
+          <a class="hub-link-card" href="https://password.guilliman.ru/" target="_blank" rel="noopener">
+            <b>password.guilliman.ru <span>↗</span></b>
+            <span>Генератор криптостойких паролей</span>
+          </a>
+          <a class="hub-link-card" href="https://keytag.guilliman.ru/" target="_blank" rel="noopener">
+            <b>keytag.guilliman.ru <span>↗</span></b>
+            <span>Редактор и печать бирок для ключей</span>
+          </a>
+          <a class="hub-link-card" href="https://tartan.guilliman.ru/" target="_blank" rel="noopener">
+            <b>tartan.guilliman.ru <span>↗</span></b>
+            <span>Генератор шотландских клетчатых узоров</span>
+          </a>
+          <a class="hub-link-card" href="https://walgen.guilliman.ru/" target="_blank" rel="noopener">
+            <b>walgen.guilliman.ru <span>↗</span></b>
+            <span>Генератор обоев по формулам</span>
+          </a>
+        </div>
+      </nav>
 
-    <script>
-      (() => {
-        const search = new URLSearchParams(location.search);
-        const toggle = document.getElementById("cleanup-toggle");
-        if (search.get("cleanup") === "no" && toggle) {
-          search.set("cleanup", "yes");
-          toggle.href = "/?" + search.toString();
-          toggle.textContent = "ОЧИСТКА: ВЫКЛ";
-        }
-      })();
-    </script>
-  </body>
+      <!-- Yandex.RTB R-A-20314507-1 -->
+      <div id="yandex_rtb_R-A-20314507-1"></div>
+
+      <section class="hub-seo-text" aria-label="О конвертере HTML в Markdown">
+        <h2>Онлайн-конвертер HTML, Word и текста из буфера обмена в Markdown</h2>
+        <p>
+          <strong>«Скопипасти в Markdown» (md.guilliman.ru)</strong> — быстрый браузерный конвертер форматированного
+          текста и HTML-разметки в чистый язык Markdown (CommonMark / GitHub Flavored Markdown). Просто скопируйте
+          фрагмент статьи из браузера, документа Microsoft Word, Google Docs или Notion и нажмите <code>Ctrl+V</code>
+          (<code>Cmd+V</code> на Mac) либо перетащите <code>.html</code> файл в окно редактора.
+        </p>
+        <p>
+          Инструмент автоматически сохраняет заголовки, таблицы, списки, ссылки, блоки кода и выделение текста, очищая
+          мусорные стили и теги. Поддерживается настройка стиля заголовков (ATX / Setext), маркеров списков,
+          разделителей
+          курсива и локальная история конвертаций прямо в браузере.
+        </p>
+      </section>
+    </div>
+  </dialog>
+
+  <div id="paste" contenteditable="true" spellcheck="false"></div>
+
+  <script>
+    (() => {
+      const search = new URLSearchParams(location.search);
+      const toggle = document.getElementById("cleanup-toggle");
+      if (search.get("cleanup") === "no" && toggle) {
+        search.set("cleanup", "yes");
+        toggle.href = "/?" + search.toString();
+        toggle.textContent = "ОЧИСТКА: ВЫКЛ";
+      }
+    })();
+  </script>
 
   <script src="dist/app.js"></script>
+
+  <!-- Логика открытия окна проектов и рендера РСЯ -->
+  <script>
+    (function () {
+      const btn = document.getElementById('hubBtn');
+      const dlg = document.getElementById('hubDialog');
+      const closeBtn = document.getElementById('hubCloseBtn');
+      let adRendered = false;
+
+      if (btn && dlg) {
+        btn.addEventListener('click', () => {
+          dlg.showModal();
+          if (!adRendered) {
+            adRendered = true;
+            window.yaContextCb.push(() => {
+              Ya.Context.AdvManager.render({
+                "blockId": "R-A-20314507-1",
+                "renderTo": "yandex_rtb_R-A-20314507-1"
+              });
+            });
+          }
+        });
+        closeBtn?.addEventListener('click', () => dlg.close());
+        dlg.addEventListener('click', (e) => {
+          if (e.target === dlg) dlg.close();
+        });
+      }
+    })();
+  </script>
+</body>
+
 </html>
