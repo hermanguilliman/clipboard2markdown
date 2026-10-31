@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Скопипасти в Markdown">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F47437" />
+      <stop offset="0.55" stop-color="#DE5B1E" />
+      <stop offset="1" stop-color="#A8330A" />
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#bg)" />
+  <g fill="none" stroke="#22100A" stroke-width="46" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M155 128V366" />
+    <path d="M155 128L247 266L338 128" />
+    <path d="M338 128V306" />
+  </g>
+  <path d="M280 306H396L338 380Z" fill="#22100A" />
+</svg>

@@ -4,6 +4,16 @@
   "description": "Convert rich text to Markdown with one paste",
   "icons": [
     {
+      "src": "favicon/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon/favicon-120x120.png",
+      "sizes": "120x120",
+      "type": "image/png"
+    },
+    {
       "src": "favicon/512.png",
       "sizes": "512x512",
       "type": "image/png"
